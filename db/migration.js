@@ -2,6 +2,7 @@ const pool = require("./connection");
 
 async function createTables() {
   try {
+    //gender not null juga
     const query = `
         DROP TABLE IF EXISTS "Authors", "Posts";
 
