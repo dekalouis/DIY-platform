@@ -9,7 +9,7 @@ async function createTables() {
         CREATE TABLE IF NOT EXISTS "Authors" (
         	id SERIAL PRIMARY KEY,
         	"fullName" VARCHAR(120) NOT NULL,
-        	gender VARCHAR(6)
+        	gender VARCHAR(6) NOT NULL
         );
 
         CREATE TABLE IF NOT EXISTS "Posts" (
