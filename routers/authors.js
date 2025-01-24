@@ -1,12 +1,8 @@
 const express = require("express");
+const Controller = require("../controllers/controller");
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("authorpage dalam bentuk tabel!");
-});
-
-router.get("/detail", (req, res) => {
-  res.send("author dengan informasi yang di dapat dr post!");
-});
+router.get("/", Controller.authorList);
+router.get("/detail", Controller.authorDetails);
 
 module.exports = router;

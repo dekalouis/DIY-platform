@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DIY Platform</title>
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+        margin-top: 20px;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 10px;
+        border: 1px solid #000000;
+      }
+      th {
+        background-color: #414141;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>DIY Platform</h1>
+    <a href="/authors/detail">Show Detail</a>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Author</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% authors.forEach(author => { %>
+        <tr>
+          <td><%= author.id %></td>
+          <td><%= author.formatName %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </body>
+</html>

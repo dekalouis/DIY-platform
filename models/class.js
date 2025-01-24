@@ -4,6 +4,11 @@ class Author {
     this.fullName = fullName;
     this.gender = gender;
   }
+
+  get formatName() {
+    const prefix = this.gender === "Male" ? "Mr." : "Ms.";
+    return `${prefix} ${this.fullName}`;
+  }
 }
 
 class AuthorDetail extends Author {

@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/H8-P1-S3/fsjs-p1-v3-c4-dekalouis#readme",
   "dependencies": {
+    "ejs": "^3.1.10",
     "express": "^4.21.2",
     "pg": "^8.13.1"
   },

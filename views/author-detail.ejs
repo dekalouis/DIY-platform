@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DIY Platform - Author Details</title>
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+        margin-top: 20px;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 10px;
+        border: 1px solid #000000;
+      }
+      th {
+        background-color: #414141;
+        color: white;
+      }
+      .text-red {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>DIY Platform</h1>
+    <a href="/authors">Back to Authors</a>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Author</th>
+          <th>Total Post</th>
+          <th>Total Vote</th>
+          <th>Average Estimated Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% authorDetails.forEach(detail => { %>
+        <tr>
+          <td><%= detail.id %></td>
+          <td><%= detail.formatName %></td>
+          <td class="<%= detail.totalPost === 0 ? 'text-red' : '' %>">
+            <%= detail.totalPost || 0 %>
+          </td>
+          <td class="<%= detail.totalVote === 0 ? 'text-red' : '' %>">
+            <%= detail.totalVote || 0 %>
+          </td>
+          <td class="<%= detail.averageTime === 0 ? 'text-red' : '' %>">
+            <%= detail.averageTime || 0 %>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </body>
+</html>

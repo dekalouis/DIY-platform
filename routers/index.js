@@ -2,12 +2,11 @@ const express = require("express");
 const router = express.Router();
 const authors = require("./authors");
 const posts = require("./posts");
+const Controller = require("../controllers/controller");
 
-router.get("/", (req, res) => {
-  res.send("this is the homepage!");
-});
+router.get("/", Controller.index);
 
-router.get("/authors", authors);
-router.get("/post", posts);
+router.use("/authors", authors);
+router.use("/post", posts);
 
 module.exports = router;
