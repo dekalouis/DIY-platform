@@ -8,7 +8,6 @@ router.get("/", (req, res) => {
 });
 
 router.get("/authors", authors);
-
 router.get("/post", posts);
 
 module.exports = router;
