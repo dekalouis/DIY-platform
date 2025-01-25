@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add New Post</title>
+  </head>
+  <body>
+    <h1>Add New Post</h1>
+    <form action="/posts/add" method="POST">
+      <div>
+        <label for="title">Title</label><br />
+        <input type="text" id="title" name="title" />
+      </div>
+
+      <div>
+        <label for="authorId">Author</label><br />
+        <select id="authorId" name="authorId">
+          <option value="" disabled selected>Choose Author</option>
+          <% authors.forEach((author) => { %>
+          <option value="<%= author.id %>"><%= author.fullName %></option>
+          <% }); %>
+        </select>
+      </div>
+
+      <div>
+        <label for="difficulty">Difficulty</label><br />
+        <select id="difficulty" name="difficulty">
+          <option value="Easy">Easy</option>
+          <option value="Medium">Medium</option>
+          <option value="Hard">Hard</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="estimatedTime">Estimated Time (Minutes)</label><br />
+        <input type="number" id="estimatedTime" name="estimatedTime" min="1" />
+      </div>
+
+      <div>
+        <label for="imageUrl">Image URL</label><br />
+        <input type="text" id="imageUrl" name="imageUrl" />
+      </div>
+
+      <div>
+        <label for="createdDate">Created Date</label><br />
+        <input type="date" id="createdDate" name="createdDate" />
+      </div>
+
+      <div>
+        <label for="description">Description</label><br />
+        <textarea id="description" name="description" rows="5"></textarea>
+      </div>
+
+      <div>
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </body>
+</html>

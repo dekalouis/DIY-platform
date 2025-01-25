@@ -7,6 +7,6 @@ const Controller = require("../controllers/controller");
 router.get("/", Controller.index);
 
 router.use("/authors", authors);
-router.use("/post", posts);
+router.use("/posts", posts);
 
 module.exports = router;

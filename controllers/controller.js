@@ -25,6 +25,56 @@ class Controller {
       res.send(error);
     }
   }
+
+  static async postList(req, res) {
+    try {
+      const posts = await Model.postList();
+      res.render("posts", { posts });
+    } catch (error) {
+      console.log(error);
+      res.send(error);
+    }
+  }
+
+  static async addPostForm(req, res) {
+    try {
+      const authors = await Model.authorList();
+      res.render("add-post", { authors });
+      //   console.log(authors);
+    } catch (error) {
+      console.log(error);
+      res.send(error);
+    }
+  }
+
+  static async addPost(req, res) {
+    // console.log(req.body);
+    try {
+      const {
+        title,
+        authorId,
+        difficulty,
+        estimatedTime,
+        imageUrl,
+        createdDate,
+        description,
+      } = req.body;
+
+      await Model.addPost(
+        title,
+        authorId,
+        difficulty,
+        estimatedTime,
+        imageUrl,
+        createdDate,
+        description
+      );
+      res.redirect("/posts");
+    } catch (error) {
+      console.log(error);
+      res.send(error);
+    }
+  }
 }
 
 module.exports = Controller;

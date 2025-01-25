@@ -1,5 +1,5 @@
 const pool = require("../db/connection");
-const { Author, AuthorDetail } = require("./class");
+const { Author, AuthorDetail, Post } = require("./class");
 
 class Model {
   static async authorList() {
@@ -53,6 +53,45 @@ class Model {
     });
     // console.log(authorDetails, `liat deh udh angka belom dan nullnya`);
     return authorDetails;
+  }
+
+  static async postList() {
+    let query = `
+        SELECT * FROM "Posts" p
+        ORDER BY p."totalVote" DESC;
+        `;
+    const result = await pool.query(query);
+    const posts = result.rows.map((el) => {
+      const { id, title, difficulty, totalVote } = el;
+      return new Post(id, title, difficulty, totalVote);
+    });
+    // console.log(posts, "<post sebaga instance");
+    return posts;
+  }
+
+  static async addPost(
+    title,
+    authorId,
+    difficulty,
+    estimatedTime,
+    imageUrl,
+    createdDate,
+    description
+  ) {
+    let query = `
+    INSERT INTO "Posts" (title, "AuthorId", difficulty, "estimatedTime", "imageUrl", "createdDate", description, "totalVote")
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+    `;
+    await pool.query(query, [
+      title,
+      authorId,
+      difficulty,
+      estimatedTime,
+      imageUrl,
+      createdDate,
+      description,
+      0,
+    ]);
   }
 }
 

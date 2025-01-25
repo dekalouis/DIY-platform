@@ -1,23 +1,20 @@
 const express = require("express");
+const Controller = require("../controllers/controller");
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("menampilkan data post dalam tabel!");
-});
+router.get("/", Controller.postList);
 
-router.get("/add", (req, res) => {
-  res.send("form penambahan post!");
-});
-//need to router.post add
+router.get("/add", Controller.addPostForm);
+//kerjain ini dulu ya
 
-//get post/:id
+router.post("/add", Controller.addPost);
 
-//get post/:id/edit
+// router.get("/:id", Controller.postDetail);
 
-//post post/:id/edit
+// router.get("/:id/edit", Controller.editPostForm);
 
-//get post/:id/delete
+// router.post("/:id/edit", Controller.updatePost);
 
-//get post/:id/vote
+// router.get("/:id/delete", Controller.deletePost);
 
 module.exports = router;

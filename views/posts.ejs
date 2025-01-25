@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DIY Platform - Posts</title>
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+        margin-top: 20px;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 10px;
+        border: 1px solid #000000;
+      }
+      th {
+        background-color: #414141;
+        color: white;
+      }
+      .action-buttons a {
+        text-decoration: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        color: white;
+        margin-bottom: 20px;
+      }
+      .action-buttons .read-more {
+        background-color: #2b6cb0;
+      }
+      .action-buttons .edit {
+        background-color: #ffc107;
+      }
+      .action-buttons .delete {
+        background-color: #dc3545;
+      }
+      .action-buttons a:hover {
+        opacity: 0.8;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>DIY Platform</h1>
+    <a href="/posts/add" class="button">Add Post</a>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Difficulty</th>
+          <th>Total Vote</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% posts.forEach(post => { %>
+        <tr>
+          <td><%= post.title %></td>
+          <td><%= post.difficulty %></td>
+          <td><%= post.totalVote %></td>
+          <td class="action-buttons">
+            <a href="/posts/<%= post.id %>" class="read-more">Read More</a>
+            <a href="/posts/<%= post.id %>/edit" class="edit">Edit</a>
+            <a href="/posts/<%= post.id %>/delete" class="delete">Delete</a>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </body>
+</html>
