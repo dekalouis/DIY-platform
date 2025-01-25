@@ -1,5 +1,5 @@
 const pool = require("../db/connection");
-const { Author, AuthorDetail, Post } = require("./class");
+const { Author, AuthorDetail, Post, PostDetail } = require("./class");
 
 class Model {
   static async authorList() {
@@ -67,6 +67,42 @@ class Model {
     });
     // console.log(posts, "<post sebaga instance");
     return posts;
+  }
+
+  static async getPostById(id) {
+    const query = `
+    SELECT 
+      p.id, 
+      p.title, 
+      p.difficulty, 
+      p."estimatedTime", 
+      p."imageUrl", 
+      p."createdDate", 
+      p.description, 
+      p."totalVote", 
+      a."fullName" AS authorName
+      FROM "Posts" p
+      JOIN "Authors" a 
+      ON p."AuthorId" = a.id
+      WHERE p.id = $1;
+  `;
+
+    const result = await pool.query(query, [id]);
+    const post = result.rows[0];
+    // console.log(post);
+
+    return new PostDetail(
+      post.id,
+      post.title,
+      post.difficulty,
+      post.totalVote,
+      post.estimatedTime,
+      post.description,
+      post.imageUrl,
+      post.createdDate,
+      post.AuthorId,
+      post.authorName
+    );
   }
 
   static async addPost(

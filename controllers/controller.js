@@ -36,6 +36,18 @@ class Controller {
     }
   }
 
+  //POST DETAILNYA LUPA AMPUN
+  static async postDetail(req, res) {
+    try {
+      const { id } = req.params;
+      const post = await Model.getPostById(id);
+      res.render("post-details", { post });
+    } catch (error) {
+      console.log(error);
+      res.send(error);
+    }
+  }
+
   static async addPostForm(req, res) {
     try {
       const authors = await Model.authorList();

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DIY Platform - <%= post.title %></title>
+    <style>
+      .description {
+        white-space: pre-line;
+        margin: 15px 0px;
+      }
+      .action-button {
+        text-decoration: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        color: white;
+        margin-bottom: 20px;
+        background-color: #2b6cb0;
+      }
+      .action-button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h1><%= post.title %></h1>
+      <div>
+        <img src="<%= post.imageUrl %>" alt="<%= post.title %>" />
+      </div>
+      <div>
+        <p>
+          <strong>Estimated Time:</strong> <%= post.estimatedTime %> Minutes
+        </p>
+        <p><strong>Difficulty:</strong> <%= post.difficulty %></p>
+        <p><strong>Author:</strong> <%= post.authorName %></p>
+        <p><strong>Created Date:</strong> <%= post.createdDate %></p>
+        <p><strong>Total Vote:</strong> <%= post.totalVote %></p>
+        <a class="action-button">Vote</a>
+      </div>
+      <div></div>
+      <div class="description"><%= post.description %></div>
+    </div>
+  </body>
+</html>

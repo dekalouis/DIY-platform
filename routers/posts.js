@@ -5,11 +5,10 @@ const router = express.Router();
 router.get("/", Controller.postList);
 
 router.get("/add", Controller.addPostForm);
-//kerjain ini dulu ya
-
 router.post("/add", Controller.addPost);
 
-// router.get("/:id", Controller.postDetail);
+//! YANG INI SKRG
+router.get("/:id", Controller.postDetail);
 
 // router.get("/:id/edit", Controller.editPostForm);
 
