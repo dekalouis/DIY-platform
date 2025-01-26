@@ -4,6 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add New Post</title>
+    <style>
+      button {
+        text-decoration: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        color: white;
+        margin-bottom: 20px;
+        background-color: #2b6cb0;
+      }
+      button:hover {
+        opacity: 0.8;
+      }
+    </style>
   </head>
   <body>
     <h1>Add New Post</h1>
@@ -14,8 +27,8 @@
       </div>
 
       <div>
-        <label for="authorId">Author</label><br />
-        <select id="authorId" name="authorId">
+        <label for="AuthorId">Author</label><br />
+        <select id="AuthorId" name="AuthorId">
           <option value="" disabled selected>Choose Author</option>
           <% authors.forEach((author) => { %>
           <option value="<%= author.id %>"><%= author.fullName %></option>

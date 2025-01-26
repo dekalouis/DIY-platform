@@ -1,3 +1,4 @@
+const { deletePost } = require("../controllers/controller");
 const pool = require("../db/connection");
 const { Author, AuthorDetail, Post, PostDetail } = require("./class");
 
@@ -80,7 +81,8 @@ class Model {
       p."createdDate", 
       p.description, 
       p."totalVote", 
-      a."fullName" AS authorName
+      p."AuthorId",
+      a."fullName" AS "authorName"
       FROM "Posts" p
       JOIN "Authors" a 
       ON p."AuthorId" = a.id
@@ -107,7 +109,7 @@ class Model {
 
   static async addPost(
     title,
-    authorId,
+    AuthorId,
     difficulty,
     estimatedTime,
     imageUrl,
@@ -120,7 +122,7 @@ class Model {
     `;
     await pool.query(query, [
       title,
-      authorId,
+      AuthorId,
       difficulty,
       estimatedTime,
       imageUrl,
@@ -128,6 +130,44 @@ class Model {
       description,
       0,
     ]);
+  }
+
+  static async updatePost(
+    id,
+    title,
+    AuthorId,
+    difficulty,
+    estimatedTime,
+    imageUrl,
+    createdDate,
+    description
+  ) {
+    const query = `
+    UPDATE "Posts"
+    SET title = $1, "AuthorId" = $2, difficulty = $3, "estimatedTime" = $4, 
+    "imageUrl" = $5, "createdDate" = $6, description = $7
+    WHERE id = $8;
+    `;
+
+    await pool.query(query, [
+      title,
+      AuthorId,
+      difficulty,
+      estimatedTime,
+      imageUrl,
+      createdDate,
+      description,
+      id,
+    ]);
+  }
+
+  static async deletePost(id) {
+    const query = `
+    DELETE FROM "Posts"
+    WHERE id = $1;
+    `;
+
+    await pool.query(query, [id]);
   }
 }
 

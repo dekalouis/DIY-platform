@@ -64,7 +64,7 @@ class Controller {
     try {
       const {
         title,
-        authorId,
+        AuthorId,
         difficulty,
         estimatedTime,
         imageUrl,
@@ -74,13 +74,72 @@ class Controller {
 
       await Model.addPost(
         title,
-        authorId,
+        AuthorId,
         difficulty,
         estimatedTime,
         imageUrl,
         createdDate,
         description
       );
+      res.redirect("/posts");
+    } catch (error) {
+      console.log(error);
+      res.send(error);
+    }
+  }
+
+  static async editPostForm(req, res) {
+    try {
+      const { id } = req.params;
+      const post = await Model.getPostById(id);
+      const authors = await Model.authorList();
+
+      //   console.log(post);
+      //   console.log(post.formatCreatedDate);
+      //   console.log(authors[0].id, authors[0].fullName);
+      res.render("edit-post", { post, authors });
+    } catch (error) {
+      console.log(error);
+      res.send(error);
+    }
+  }
+
+  static async updatePost(req, res) {
+    try {
+      const { id } = req.params;
+      const {
+        title,
+        AuthorId,
+        difficulty,
+        estimatedTime,
+        imageUrl,
+        createdDate,
+        description,
+      } = req.body;
+
+      await Model.updatePost(
+        id,
+        title,
+        AuthorId,
+        difficulty,
+        estimatedTime,
+        imageUrl,
+        createdDate,
+        description
+      );
+      res.redirect("/posts");
+    } catch (error) {
+      console.log(error);
+      res.send(error);
+    }
+  }
+
+  static async deletePost(req, res) {
+    try {
+      const { id } = req.params;
+
+      await Model.deletePost(id);
+
       res.redirect("/posts");
     } catch (error) {
       console.log(error);

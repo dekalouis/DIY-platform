@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Post #<%= post.id %></title>
+    <style>
+      button {
+        text-decoration: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        color: white;
+        margin-bottom: 20px;
+        background-color: #2b6cb0;
+      }
+      button:hover {
+        opacity: 0.8;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Edit Post #<%= post.id %></h1>
+    <form action="/posts/<%= post.id %>/edit" method="POST">
+      <div>
+        <label for="title">Title</label><br />
+        <input type="text" id="title" name="title" value="<%= post.title %>" />
+      </div>
+
+      <div>
+        <label for="AuthorId">Author</label><br />
+        <select id="AuthorId" name="AuthorId">
+          <% authors.forEach((author) => { %>
+          <option value="<%= author.id %>" <%= author.id === post.AuthorId ? "selected" : "" %>>
+            <%= author.fullName %>
+          </option>
+          <% }); %>
+        </select>
+      </div>
+
+      <div>
+        <label for="difficulty">Difficulty</label><br />
+        <select id="difficulty" name="difficulty">
+          <option value="Easy" <%= post.difficulty === "Easy" ? "selected" : "" %>>Easy</option>
+          <option value="Medium" <%= post.difficulty === "Medium" ? "selected" : "" %>>Medium</option>
+          <option value="Hard" <%= post.difficulty === "Hard" ? "selected" : "" %>>Hard</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="estimatedTime">Estimated Time (Minutes)</label><br />
+        <input type="number" id="estimatedTime" name="estimatedTime" value="<%= post.estimatedTime %>" min="1" />
+      </div>
+
+      <div>
+        <label for="imageUrl">Image URL</label><br />
+        <input type="text" id="imageUrl" name="imageUrl" value="<%= post.imageUrl %>" />
+      </div>
+
+      <div>
+        <label for="createdDate">Created Date</label><br />
+        <input type="date" id="createdDate" name="createdDate" value="<%= post.formatCreatedDate %>" />
+      </div>
+
+      <div>
+        <label for="description">Description</label><br />
+        <textarea id="description" name="description" rows="5"><%= post.description %></textarea>
+      </div>
+
+      <div>
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </body>
+</html>
