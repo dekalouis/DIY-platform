@@ -9,7 +9,7 @@
         white-space: pre-line;
         margin: 15px 0px;
       }
-      .action-button {
+      .button {
         text-decoration: none;
         padding: 5px 10px;
         border-radius: 5px;
@@ -17,8 +17,8 @@
         margin-bottom: 20px;
         background-color: #2b6cb0;
       }
-      .action-button:hover {
-        background-color: #0056b3;
+      .button:hover {
+        opacity: 0.8;
       }
 
       img {
@@ -29,6 +29,7 @@
   <body>
     <div>
       <h1><%= post.title %></h1>
+      <%- include('partials/navbar') %>
       <div>
         <img src="<%= post.imageUrl %>" alt="<%= post.title %>" />
       </div>
@@ -40,10 +41,10 @@
         <p><strong>Author:</strong> <%= post.authorName %></p>
         <p><strong>Created Date:</strong> <%= post.createdDate %></p>
         <p><strong>Total Vote:</strong> <%= post.totalVote %></p>
-        <a class="action-button">Vote</a>
+        <a class="button" href="/posts/<%= post.id %>/vote">Vote</a>
       </div>
-      <div></div>
       <div class="description"><%= post.description %></div>
+      <a href="/posts" class="button">Back</a>
     </div>
   </body>
 </html>

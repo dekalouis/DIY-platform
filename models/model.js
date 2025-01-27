@@ -56,12 +56,23 @@ class Model {
     return authorDetails;
   }
 
-  static async postList() {
+  static async postList(search) {
     let query = `
         SELECT * FROM "Posts" p
-        ORDER BY p."totalVote" DESC;
         `;
-    const result = await pool.query(query);
+    const param = [];
+    if (search) {
+      query += `WHERE p.title ILIKE $1 `;
+      param.push(`%${search}%`);
+    }
+    query += `
+    ORDER BY p."totalVote" DESC;`;
+
+    // console.log(query);
+    // console.log(param);
+
+    const result = await pool.query(query, param);
+
     const posts = result.rows.map((el) => {
       const { id, title, difficulty, totalVote } = el;
       return new Post(id, title, difficulty, totalVote);
@@ -116,6 +127,28 @@ class Model {
     createdDate,
     description
   ) {
+    const validationErrors = [];
+    //! VALIDASINYA
+    const today = new Date().toISOString().split("T")[0];
+    if (!title) validationErrors.push("Title is required.");
+    if (!AuthorId) validationErrors.push("Author is required.");
+    if (!difficulty) validationErrors.push("Difficulty is required.");
+    if (!estimatedTime || estimatedTime < 5)
+      validationErrors.push("Minimum estimated time is 5 minutes.");
+    if (title.length > 100)
+      validationErrors.push("Post title maximum character is 100.");
+    if (imageUrl && imageUrl.length > 100)
+      validationErrors.push("Image URL maximum character is 100.");
+    if (!createdDate || createdDate > today)
+      validationErrors.push("Maximum created date is today.");
+    if (!description || description.split(" ").length < 10) {
+      validationErrors.push("Minimum word in description is 10.");
+    }
+
+    if (validationErrors.length > 0) {
+      throw new Error(validationErrors.join(" ; "));
+    }
+    // QUERYNYA
     let query = `
     INSERT INTO "Posts" (title, "AuthorId", difficulty, "estimatedTime", "imageUrl", "createdDate", description, "totalVote")
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
@@ -142,6 +175,29 @@ class Model {
     createdDate,
     description
   ) {
+    const validationErrors = [];
+    //! VALIDASINYA
+    const today = new Date().toISOString().split("T")[0];
+    if (!title) validationErrors.push("Title is required.");
+    if (!AuthorId) validationErrors.push("Author is required.");
+    if (!difficulty) validationErrors.push("Difficulty is required.");
+    if (!estimatedTime || estimatedTime < 5)
+      validationErrors.push("Minimum estimated time is 5 minutes.");
+    if (title.length > 100)
+      validationErrors.push("Post title maximum character is 100.");
+    if (imageUrl && imageUrl.length > 100)
+      validationErrors.push("Image URL maximum character is 100.");
+    if (!createdDate || createdDate > today)
+      validationErrors.push("Maximum created date is today.");
+    if (!description || description.split(" ").length < 10) {
+      validationErrors.push("Minimum word in description is 10.");
+    }
+
+    if (validationErrors.length > 0) {
+      throw new Error(validationErrors.join(" ; "));
+    }
+    // QUERYNYA
+
     const query = `
     UPDATE "Posts"
     SET title = $1, "AuthorId" = $2, difficulty = $3, "estimatedTime" = $4, 
@@ -164,6 +220,16 @@ class Model {
   static async deletePost(id) {
     const query = `
     DELETE FROM "Posts"
+    WHERE id = $1;
+    `;
+
+    await pool.query(query, [id]);
+  }
+
+  static async incrementVote(id) {
+    const query = `
+    UPDATE "Posts"
+    SET "totalVote" = "totalVote" + 1
     WHERE id = $1;
     `;
 

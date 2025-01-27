@@ -14,4 +14,7 @@ router.post("/:id/edit", Controller.updatePost);
 //!YOK BISA YOK
 router.get("/:id/delete", Controller.deletePost);
 
+//! PART DUA NAMBAHIN VOTE
+router.get("/:id/vote", Controller.incrementVote);
+
 module.exports = router;

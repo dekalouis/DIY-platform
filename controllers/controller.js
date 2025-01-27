@@ -28,8 +28,11 @@ class Controller {
 
   static async postList(req, res) {
     try {
-      const posts = await Model.postList();
-      res.render("posts", { posts });
+      const { search } = req.query;
+      //   console.log(req.query, `querynya`);
+      //   console.log(search, `searchnya`);
+      const posts = await Model.postList(search);
+      res.render("posts", { posts, search });
     } catch (error) {
       console.log(error);
       res.send(error);
@@ -51,11 +54,18 @@ class Controller {
   static async addPostForm(req, res) {
     try {
       const authors = await Model.authorList();
-      res.render("add-post", { authors });
+      res.render("add-post", { authors, errors: [] });
       //   console.log(authors);
     } catch (error) {
-      console.log(error);
-      res.send(error);
+      console.log(error.message);
+      const authors = await Model.authorList();
+
+      //   res.send(error);
+      res.render("add-post", {
+        errors: [error.message],
+        authors,
+        data: req.body,
+      });
     }
   }
 
@@ -83,8 +93,17 @@ class Controller {
       );
       res.redirect("/posts");
     } catch (error) {
-      console.log(error);
-      res.send(error);
+      //   console.log(error);
+      //   res.send(error);
+      console.log(error.message);
+      const authors = await Model.authorList();
+
+      //   res.send(error);
+      res.render("add-post", {
+        errors: [error.message],
+        authors,
+        data: req.body,
+      });
     }
   }
 
@@ -97,10 +116,18 @@ class Controller {
       //   console.log(post);
       //   console.log(post.formatCreatedDate);
       //   console.log(authors[0].id, authors[0].fullName);
-      res.render("edit-post", { post, authors });
+      res.render("edit-post", { post, authors, errors: [] });
     } catch (error) {
       console.log(error);
-      res.send(error);
+      console.log(error.message);
+      const authors = await Model.authorList();
+
+      //   res.send(error);
+      res.render("edit-post", {
+        errors: [error.message],
+        authors,
+        data: req.body,
+      });
     }
   }
 
@@ -116,7 +143,7 @@ class Controller {
         createdDate,
         description,
       } = req.body;
-
+      //   console.log(req.body);
       await Model.updatePost(
         id,
         title,
@@ -129,8 +156,18 @@ class Controller {
       );
       res.redirect("/posts");
     } catch (error) {
-      console.log(error);
-      res.send(error);
+      //   console.log(error);
+      //   res.send(error);
+      //! HARUS DIGANTI BIAR GA BERUBAH2
+      const authors = await Model.authorList();
+      const post = await Model.getPostById(req.params.id);
+
+      //   console.log(post);
+      res.render("edit-post", {
+        errors: [error.message],
+        authors,
+        post: post,
+      });
     }
   }
 
@@ -141,6 +178,19 @@ class Controller {
       await Model.deletePost(id);
 
       res.redirect("/posts");
+    } catch (error) {
+      console.log(error);
+      res.send(error);
+    }
+  }
+
+  static async incrementVote(req, res) {
+    try {
+      const { id } = req.params;
+
+      await Model.incrementVote(id);
+
+      res.redirect(`/posts/${id}`);
     } catch (error) {
       console.log(error);
       res.send(error);

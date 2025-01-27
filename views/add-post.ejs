@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add New Post</title>
     <style>
+      .button {
+        text-decoration: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        color: white;
+        margin-bottom: 20px;
+        background-color: #2b6cb0;
+      }
+      .button:hover {
+        opacity: 0.8;
+      }
       button {
         text-decoration: none;
         padding: 5px 10px;
@@ -20,6 +31,16 @@
   </head>
   <body>
     <h1>Add New Post</h1>
+    <%- include('partials/navbar') %> <% if (errors && errors.length > 0) { %>
+    <div class="error-messages">
+      <ul>
+        <% errors.forEach((error) => { %>
+        <p style="color: red"><%= error %></p>
+        <% }); %>
+      </ul>
+    </div>
+    <% } %>
+
     <form action="/posts/add" method="POST">
       <div>
         <label for="title">Title</label><br />
